@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2f7d32">
+  <title>AgriScan - Field Inspection</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toast" class="toast"></div>
+
+  <section id="authView" class="auth-view">
+    <div class="auth-card">
+      <div class="brand">
+        <div class="logo">🌱</div>
+        <div>
+          <h1>AgriScan</h1>
+          <p>Field Inspection & Issue Logger</p>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-auth="login">Login</button>
+        <button class="tab" data-auth="register">Create account</button>
+      </div>
+
+      <form id="authForm">
+        <div id="nameGroup" class="field hidden">
+          <label>Full name</label>
+          <input id="name" type="text" placeholder="Your name">
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input id="password" type="password" placeholder="Minimum 6 characters" required>
+        </div>
+
+        <button class="primary full" type="submit" id="authSubmit">Login</button>
+      </form>
+    </div>
+  </section>
+
+  <section id="appView" class="app-view hidden">
+    <header class="topbar">
+      <div>
+        <div class="brand-small">🌱 <strong>AgriScan</strong></div>
+        <span id="welcomeText"></span>
+      </div>
+      <button id="logoutBtn" class="outline">Logout</button>
+    </header>
+
+    <main class="container">
+      <div class="hero">
+        <div>
+          <h2>Field Inspection Dashboard</h2>
+          <p>Capture problems, record observations and keep your field history organized.</p>
+        </div>
+        <button id="newInspectionBtn" class="primary">＋ New Inspection</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><span>Total</span><strong id="totalCount">0</strong></div>
+        <div class="stat"><span>Pending</span><strong id="pendingCount">0</strong></div>
+        <div class="stat"><span>Critical</span><strong id="criticalCount">0</strong></div>
+        <div class="stat"><span>Resolved</span><strong id="resolvedCount">0</strong></div>
+      </div>
+
+      <div class="toolbar">
+        <input id="searchInput" type="search" placeholder="Search inspections...">
+        <select id="categoryFilter">
+          <option value="">All categories</option>
+          <option value="Crop">Crop</option>
+          <option value="Equipment">Equipment</option>
+          <option value="Irrigation">Irrigation</option>
+          <option value="Pest">Pest</option>
+          <option value="Disease">Disease</option>
+          <option value="Other">Other</option>
+        </select>
+        <select id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="PENDING">Pending</option>
+          <option value="CRITICAL">Critical</option>
+          <option value="RESOLVED">Resolved</option>
+        </select>
+        <input id="dateFilter" type="date">
+        <button id="clearFilters" class="outline">Clear</button>
+      </div>
+
+      <div id="inspectionList" class="inspection-list"></div>
+    </main>
+  </section>
+
+  <div id="inspectionModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h2>New Inspection</h2>
+          <p>Record a field observation.</p>
+        </div>
+        <button id="closeModal" class="close">×</button>
+      </div>
+
+      <form id="inspectionForm">
+        <div class="grid-2">
+          <div class="field">
+            <label>Inspection title</label>
+            <input id="inspectionTitle" required placeholder="e.g. Tomato field inspection">
+          </div>
+
+          <div class="field">
+            <label>Category</label>
+            <select id="inspectionCategory" required>
+              <option value="">Choose category</option>
+              <option>Crop</option>
+              <option>Equipment</option>
+              <option>Irrigation</option>
+              <option>Pest</option>
+              <option>Disease</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Crop / Equipment</label>
+            <input id="cropOrEquipment" required placeholder="e.g. Tomatoes / Pump 01">
+          </div>
+
+          <div class="field">
+            <label>Status</label>
+            <select id="inspectionStatus">
+              <option value="PENDING">Pending</option>
+              <option value="CRITICAL">Critical</option>
+              <option value="RESOLVED">Resolved</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Inspection date</label>
+          <input id="inspectionDate" type="datetime-local">
+        </div>
+
+        <div class="field">
+          <label>Notes / issue description</label>
+          <textarea id="inspectionNotes" rows="5" placeholder="Describe what you observed..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Photos</label>
+          <input id="inspectionImages" type="file" accept="image/*" capture="environment" multiple>
+          <small>Up to 5 images, 8 MB each.</small>
+        </div>
+
+        <div id="imagePreview" class="image-preview"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="cancelInspection" class="outline">Cancel</button>
+          <button type="submit" class="primary" id="saveInspection">Save Inspection</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
